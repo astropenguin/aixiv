@@ -6,6 +6,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass, field
 from logging import getLogger
 from re import compile
+from textwrap import shorten
 from typing import Optional
 
 
@@ -67,6 +68,18 @@ def format_date(date_like: str, /) -> str:
     raise ValueError(f"Could not parse {date_like!r}.")
 
 
+def format_text(text_like: str, /) -> str:
+    """Parse and format a text-like string (detex)."""
+    try:
+        return DETEXER.latex_to_text(text_like)
+    except Exception:
+        LOGGER.warning(
+            f"Failed to format {shorten(text_like, 100)!r}. "
+            "The original string was returned instead."
+        )
+        return text_like
+
+
 def search(
     categories: Sequence[str],
     keywords: Sequence[str] = (),
@@ -109,7 +122,7 @@ def search(
 
     if detex:
         for article in articles:
-            article.title = DETEXER.latex_to_text(article.title)
-            article.summary = DETEXER.latex_to_text(article.summary)
+            article.title = format_text(article.title)
+            article.summary = format_text(article.summary)
 
     return articles
