@@ -81,12 +81,13 @@ def format_text(text_like: str, /) -> str:
 
 
 def search(
-    categories: Sequence[str],
+    categories: Sequence[str] = (),
     keywords: Sequence[str] = (),
-    *,
     start_date: str = "3 days ago at midnight in UTC",
     end_date: str = "2 days ago at midnight in UTC",
+    *,
     detex: bool = True,
+    maximum: int = 100,
 ) -> list[Article]:
     """Search for articles in arXiv.
 
@@ -96,6 +97,7 @@ def search(
         start_date: Start date (and time) of the search.
         end_date: End date (and time) of the search.
         detex: Whether to convert LaTeX commands to Unicode.
+        maximum: Maximum number of articles to search.
 
     Returns:
         Articles found with given conditions.
@@ -115,7 +117,7 @@ def search(
         query += f" AND ({sub})"
 
     client = Client()
-    search = Search(query)
+    search = Search(query, max_results=maximum)
     articles = list(map(Article.from_arxiv, client.results(search)))
     LOGGER.debug(f"Query for search: {query!r}")
     LOGGER.debug(f"Number of articles found: {len(articles)}")

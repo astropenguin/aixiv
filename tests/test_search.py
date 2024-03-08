@@ -17,11 +17,6 @@ EXPECTED_URLS = [
 
 # test functions
 def test_search() -> None:
-    articles = search(
-        categories=CATEGORIES,
-        keywords=KEYWORDS,
-        start_date=START_DATE,
-        end_date=END_DATE,
-    )
+    articles = search(CATEGORIES, KEYWORDS, START_DATE, END_DATE)
     urls = [article.url for article in articles]
     assert urls == EXPECTED_URLS
