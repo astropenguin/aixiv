@@ -15,6 +15,14 @@ from arxiv import Client, Result, Search
 from dateparser import parse
 from pylatexenc.latex2text import LatexNodes2Text
 from typing_extensions import Self
+from .defaults import (
+    KEYWORDS,
+    CATEGORIES,
+    START_DATE,
+    END_DATE,
+    DETEX,
+    MAXIMUM,
+)
 
 
 # constants
@@ -81,13 +89,13 @@ def format_text(text_like: str, /) -> str:
 
 
 def search(
-    categories: Sequence[str] = (),
-    keywords: Sequence[str] = (),
-    start_date: str = "3 days ago at midnight in UTC",
-    end_date: str = "2 days ago at midnight in UTC",
+    categories: Sequence[str] = CATEGORIES,
+    keywords: Sequence[str] = KEYWORDS,
+    start_date: str = START_DATE,
+    end_date: str = END_DATE,
     *,
-    detex: bool = True,
-    maximum: int = 100,
+    detex: bool = DETEX,
+    maximum: int = MAXIMUM,
 ) -> list[Article]:
     """Search for articles in arXiv.
 
