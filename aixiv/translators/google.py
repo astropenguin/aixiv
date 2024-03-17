@@ -4,7 +4,6 @@ __all__ = ["Google"]
 # standard library
 from dataclasses import dataclass, replace
 from logging import getLogger
-from time import sleep
 
 
 # dependencies
@@ -28,13 +27,9 @@ class Google(Translator):
         api_key: API key of the translator.
         language: Language code of the translated articles.
         summarize: Whether to summarize the articles.
-        latency: Latency to avoid exceeding the API rate limit.
         model: Name of the generative model.
 
     """
-
-    latency: float = 1.0
-    """Latency to avoid exceeding the API rate limit."""
 
     model: str = "gemini-pro"
     """Name of the generative model."""
@@ -57,7 +52,6 @@ class Google(Translator):
 
         # run translations
         async def run(prompt: str) -> str:
-            sleep(self.latency)  # sync sleep!
             response = await model.generate_content_async(prompt)
             return response.text
 

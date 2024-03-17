@@ -9,7 +9,7 @@ from importlib import import_module
 from logging import getLogger
 from os import environ
 from re import compile
-from typing import Any, Union
+from typing import Any, Optional, Union
 
 
 # dependencies
@@ -17,8 +17,8 @@ from babel import Locale
 from .article import Finally, TArticle, amap
 from .defaults import (
     API_KEY,
-    CONCURRENCY,
     LANGUAGE,
+    LIMIT,
     SUMMARIZE,
     TIMEOUT,
     TRANSLATOR,
@@ -73,7 +73,7 @@ def translate(
     language: str = LANGUAGE,
     summarize: bool = SUMMARIZE,
     # options for mapping
-    concurrency: int = CONCURRENCY,
+    limit: Optional[str] = LIMIT,
     timeout: float = TIMEOUT,
     # other options for translator
     **options: Any,
@@ -88,8 +88,8 @@ def translate(
         language: Language code of the translated articles.
             If it is ``"auto"``, the locale language will be used.
         summarize: Whether to summarize the articles.
-        concurrency: Number of concurrent executions.
-            Only used when ``translator`` supports async calls.
+        limit: Rate limit for the function executions.
+            If it is ``None``, (almost) no rate limit is set.
         timeout: Timeout per article in seconds.
             Only used when ``translator`` supports async calls.
         **options: Other options for ``translator`` (if any).
@@ -120,6 +120,6 @@ def translate(
     return amap(
         Translator_(api_key, language, summarize, **options),
         articles,
-        concurrency=concurrency,
+        limit=limit,
         timeout=timeout,
     )

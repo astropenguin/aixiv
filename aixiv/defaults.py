@@ -1,6 +1,6 @@
 __all__ = [
     # constants (article)
-    "CONCURRENCY",
+    "LIMIT",
     "TIMEOUT",
     # constants (search)
     "CATEGORIES",
@@ -24,8 +24,8 @@ from typing import Literal
 
 
 # constants (article)
-CONCURRENCY = 4
-"""Number of concurrent executions."""
+LIMIT = "1/second"
+"""Rate limit for the function executions."""
 
 TIMEOUT = 10
 """Timeout per article in seconds."""

@@ -57,7 +57,7 @@ def format(articles: Iterable[TArticle], /) -> list[TArticle]:
             )
             return article
 
-    return list(amap(runner, articles))
+    return list(amap(runner, articles, limit=None))
 
 
 def search(

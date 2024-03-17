@@ -4,7 +4,6 @@ __all__ = ["OpenAI"]
 # standard library
 from dataclasses import dataclass, replace
 from logging import getLogger
-from time import sleep
 
 
 # dependencies
@@ -28,13 +27,9 @@ class OpenAI(Translator):
         api_key: API key of the translator.
         language: Language code of the translated articles.
         summarize: Whether to summarize the articles.
-        latency: Latency to avoid exceeding the API rate limit.
         model: Name of the generative model.
 
     """
-
-    latency: float = 1.0
-    """Latency to avoid exceeding the API rate limit."""
 
     model: str = "gpt-3.5-turbo"
     """Name of the generative model."""
@@ -56,7 +51,6 @@ class OpenAI(Translator):
 
         # run translations
         async def run(prompt: str) -> str:
-            sleep(self.latency)  # sync sleep!
             completion = await client.chat.completions.create(
                 messages=[{"role": "user", "content": prompt}],
                 model=self.model,
