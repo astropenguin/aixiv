@@ -11,22 +11,23 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.9, <3.13"
-arxiv = "^2.0"
+arxiv = "^2.1"
 babel = "^2.14"
 dateparser = "^1.2"
+limits = "^3.7"
 pylatexenc = "^2.10"
-typing-extensions = "^4.1"
+typing-extensions = "^4.9"
 
 [tool.poetry.dependencies.deepl]
-version = "^1.17"
+version = "^1.16"
 extras = ["all", "deepl"]
 
 [tool.poetry.dependencies.google-generativeai]
-version = "^0.4"
+version = ">=0.3, <1.0"
 extras = ["all", "google"]
 
 [tool.poetry.dependencies.openai]
-version = "^1.14"
+version = "^1.6"
 extras = ["all", "openai"]
 
 [tool.poetry.group.dev.dependencies]
